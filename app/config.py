@@ -10,17 +10,17 @@ PROJECT_PATH: DirectoryPath = Path(__file__).parent.parent
 
 
 class _ApplicationSettings(BaseSettings):
-    CLIENT_ID: str = ""
-    CLIENT_SECRET: str = ""
+    CLIENT_ID: str | None = None
+    CLIENT_SECRET: str | None = None
 
 
 class _DatabaseSettings(BaseSettings):
-    DB_HOST: str = ""
-    DB_PORT: int = ""
-    DB_NAME: str = ""
-    DB_USERNAME: str = ""
-    DB_PASSWORD: str = ""
-    DB_DRIVER_NAME: str = ""
+    DB_HOST: str | None = None
+    DB_PORT: int | None = None
+    DB_NAME: str | None = None
+    DB_USERNAME: str | None = None
+    DB_PASSWORD: str | None = None
+    DB_DRIVER_NAME: str | None = None
     DB_POOL_SIZE: int = 10
 
     @property
@@ -58,8 +58,8 @@ class _RedisSettings(BaseSettings):
 
 
 class _TaskiqSettings(BaseSettings):
-    BROKER_URL: str = ""
-    RESULT_BACKEND: str = ""
+    BROKER_URL: str | None = None
+    RESULT_BACKEND: str | None = None
 
 
 class Settings(BaseSettings):
