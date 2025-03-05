@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    shm_size: "2gb"
+    restart: always
+    expose:
+      - "5432"
+    ports:
+      - "${DATABASE__DB_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${DATABASE__DB_USER}
+      POSTGRES_PASSWORD: ${DATABASE__DB_PASSWORD}
+      POSTGRES_DB: ${DATABASE__DB_NAME}
+    env_file:
+      - ../env
+
+  nginx:
+    container_name: botter_api__nginx
+    image: nginx
+    restart: always
+    network_mode: host
+    volumes:
+      - "./nginx/nginx.local.conf:/etc/nginx/nginx.conf:ro"
+
+  redis:
+    container_name: botter_api__redis
+    image: redis:7-alpine
+    restart: always
+    expose:
+      - "6379"
+    ports:
+      - "${REDIS__PORT}:6379"
+    volumes:
+      - "../data/redis/data/:/data"
+      - "./redis/redis.conf:/redis.conf"
+    command:
+      - "redis-server"
+      - "/redis.conf"
+      - "--protected-mode no"
+      - "stop-writes-on-bgsave-error no"
