@@ -1,6 +1,6 @@
 from sqlalchemy.sql.schema import MetaData
 
-from app.infrastructure.database.base.table.mixin import NameMixin, PrimaryKeyUUIDMixin, TimestampsMixin
+from app.infrastructure.database.base.mixin import NameMixin, PrimaryKeyUUIDMixin, TimestampsMixin
 
 
 

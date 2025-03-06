@@ -21,7 +21,7 @@ class TIMESTAMP(TypeDecorator[datetime]):
 
 class UUIDIndependent(TypeDecorator[UUID4]):
     """
-    DB independent GUID type.
+    DB independent UUID type.
 
     Uses PostgreSQL's UUID type, otherwise uses
     CHAR(36), storing as regular strings.
