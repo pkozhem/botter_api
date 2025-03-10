@@ -1,14 +1,13 @@
 from typing import AsyncGenerator
 
-from pydantic_settings import BaseSettings
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine, async_sessionmaker, AsyncSession
 
 from app.config import get_settings
 
-settings: BaseSettings = get_settings()
+settings = get_settings()
 
 engine: AsyncEngine = create_async_engine(
-    url=settings.DATABASE.uri,
+    url=settings.DATABASE_URI,
     **settings.DATABASE.engine_kwargs,
 )
 
