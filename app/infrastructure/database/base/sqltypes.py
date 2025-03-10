@@ -1,31 +1,14 @@
 import uuid
-from datetime import UTC, datetime
 from typing import Any
 
 from pydantic import UUID4
-from sqlalchemy import TIMESTAMP as T, CHAR
-from sqlalchemy import TypeDecorator, Dialect
+from sqlalchemy import CHAR, Dialect, TypeDecorator
 from sqlalchemy.types import UUID
 from sqlalchemy.sql.type_api import TypeEngine
 
 
-class TIMESTAMP(TypeDecorator[datetime]):
-    """Workaround of timestamps for MySQL and SQLite dbs. Keep timestamp offset in UTC."""
-
-    impl = T
-    cache_ok = True
-
-    def process_result_value(self, value: datetime | None, dialect: Dialect) -> datetime:
-        return value.replace(tzinfo=UTC) if value is not None and dialect.name != "postgresql" else value
-
-
 class UUIDIndependent(TypeDecorator[UUID4]):
-    """
-    DB independent UUID type.
-
-    Uses PostgreSQL's UUID type, otherwise uses
-    CHAR(36), storing as regular strings.
-    """
+    """ DB independent UUID type. Uses PostgreSQL's UUID type, otherwise uses CHAR(36), storing as regular strings."""
 
     class UUIDChar(CHAR):
         """UUID type for CHAR."""
