@@ -1,9 +1,10 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Any
 
 from pydantic.types import DirectoryPath
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from sqlalchemy import URL
+from sqlalchemy import URL, AsyncAdaptedQueuePool
 
 project_path: DirectoryPath = Path(__file__).parent.parent
 
@@ -38,6 +39,12 @@ class DatabaseSettings(BaseSettings):
     db_username: str | None = None
     db_password: str | None = None
 
+    pool_size: int = 10
+    pool_pre_ping: bool = True
+    connect_args: dict[str, Any] = {
+        "prepare_threshold": None,
+    }
+
     @property
     def uri(self) -> URL:
         """Fill up database uri."""
@@ -50,6 +57,15 @@ class DatabaseSettings(BaseSettings):
             port=self.db_port,
             database=self.db_name,
         )
+
+    @property
+    def engine_kwargs(self) -> dict[str, Any]:
+        return {
+            "pool_size": self.pool_size,
+            "pool_pre_ping": self.pool_pre_ping,
+            "connect_args": self.connect_args,
+            "poolclass": AsyncAdaptedQueuePool,
+        }
 
 
 class Settings(BaseSettings):

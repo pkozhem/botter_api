@@ -8,7 +8,7 @@ settings = get_settings()
 
 engine: AsyncEngine = create_async_engine(
     url=settings.database.uri,
-    **settings.DATABASE.engine_kwargs,
+    **settings.database.engine_kwargs,
 )
 
 async_session_factory: async_sessionmaker[AsyncSession] = async_sessionmaker(
