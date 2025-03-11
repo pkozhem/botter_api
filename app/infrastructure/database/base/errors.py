@@ -16,3 +16,7 @@ class ObjectNotFoundError(BaseError):
             msg=f"Object with {id_=} not found",
             code=status.HTTP_404_NOT_FOUND,
         )
+
+
+class RepositoryConsistentError(BaseError):
+    pass
