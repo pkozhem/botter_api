@@ -11,5 +11,5 @@ async def auth(
 ):
     from app.config import get_settings
     a = get_settings()
-    print("Correct!")
+    print(f"Correct!, {a=}")
     return Response()
