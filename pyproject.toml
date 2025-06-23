@@ -14,3 +14,51 @@ dependencies = [
     "sqlalchemy (>=2.0.38,<3.0.0)",
     "asyncpg (>=0.30.0,<0.31.0)",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ruff"
+]
+
+[tool.ruff]
+target-version = "py313"
+fix = true
+src = ["app"]
+line-length = 120
+indent-width = 4
+include = [
+    "app/**/*.py",
+    "*.py",
+]
+exclude = [
+    "**/.venv",
+    "test*",
+]
+
+[tool.ruff.lint]
+select = [
+    "ALL"
+]
+ignore = [
+    "ANN401", # Dynamically typed expressions (typing.Any) are disallowed in `*args`
+    "B008", # do not perform function calls in argument defaults
+    "B024",  # abstract base class, but it has no abstract methods or properties
+    "COM812", # Ruff formatter recommeds to desable this rule
+    "D", # pydocstyle
+    "E501", # line too long, handled by ruff
+    "FA102", # Missing `from __future__ import annotations`
+    "FIX002",  # Line contains TODO, consider resolving the issue
+    "RET504", # Unnecessary assignment before return
+    "RUF100", # Unused noqa directive
+    "RUF102", # Invalid rule code in # noqa: {}
+    "TC002",  # Move third-party import into a type-checking block
+    "TD002",  # Missing author in TODO
+]
+
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
